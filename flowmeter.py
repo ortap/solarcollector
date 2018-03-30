@@ -1,6 +1,35 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar 29 18:57:29 2018
+Flow Sensor Equipment Details
+Pulse frequency (Hz) / 7.5 = flow rate in L/min.
+
+Features:
+
+Model: YF-S201
+Sensor Type: Hall effect
+Working Voltage: 5 to 18V DC (min tested working voltage 4.5V)
+Max current draw: 15mA @ 5V
+Output Type: 5V TTL
+Working Flow Rate: 1 to 30 Liters/Minute
+Working Temperature range: -25 to +80℃
+Working Humidity Range: 35%-80% RH
+Accuracy: ±10%
+Maximum water pressure: 2.0 MPa
+Output duty cycle: 50% +-10%
+Output rise time: 0.04us
+Output fall time: 0.18us
+Flow rate pulse characteristics: Frequency (Hz) = 7.5 * Flow rate (L/min)
+Pulses per Liter: 450
+Durability: minimum 300,000 cycles
+Cable length: 15cm
+1/2" nominal pipe connections, 0.78" outer diameter, 1/2" of thread
+Size: 2.5" x 1.4" x 1.4"
+Connection details:
+
+Red wire : +5V
+Black wire : GND
+Yellow wire : PWM output.
+
 
 @author: shail
 Python 3.6.3 program for flow meter
@@ -26,7 +55,7 @@ print('Control c to exit')
 while True:
     time_new = time.time() + 60
     rate_cnt = 0
-    while time.time() &lt;= time_new:
+    while time.time() <= time_new:
         if GPIO.input(inpt)!= 0:
             rate_cnt += 1
             tot_cnt += 1
