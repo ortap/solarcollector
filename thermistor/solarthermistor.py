@@ -8,9 +8,10 @@ from  math import pow, log
 import Adafruit_ADS1x15
 
 
+class thermo_datacollector:
 #--------------------ADC SETUP-----------------------
 # Create an ADS1115 ADC (16-bit) instance.
-adc = Adafruit_ADS1x15.ADS1115()
+#adc = Adafruit_ADS1x15.ADS1115()
 
 # Note you can change the I2C address from its default (0x48), and/or the I2C
 # bus by passing in these optional parameters:
