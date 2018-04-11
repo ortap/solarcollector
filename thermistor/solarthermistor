@@ -1,0 +1,63 @@
+
+# Simple demo of reading each analog input from the ADS1x15 and printing it to
+# the screen.
+# Author: Tony DiCola
+# License: Public Domain
+import time
+from  math import pow, log
+import Adafruit_ADS1x15
+
+
+#--------------------ADC SETUP-----------------------
+# Create an ADS1115 ADC (16-bit) instance.
+adc = Adafruit_ADS1x15.ADS1115()
+
+# Note you can change the I2C address from its default (0x48), and/or the I2C
+# bus by passing in these optional parameters:
+#adc = Adafruit_ADS1x15.ADS1015(address=0x49, busnum=1)
+
+# Choose a gain of 1 for reading voltages from 0 to 4.09V.
+# Or pick a different gain to change the range of voltages that are read:
+#  - 2/3 = +/-6.144V
+#  -   1 = +/-4.096V
+#  -   2 = +/-2.048V
+#  -   4 = +/-1.024V
+#  -   8 = +/-0.512V
+#  -  16 = +/-0.256V
+# See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
+
+
+#Raspberry Pi Providing a +5V to the ADC and 5V for the thermocouple voltage divider.
+GAIN = 1
+bit_to_volt = 4.096/(pow(2,15))  #Conversion factor from bits to voltage - We are only using 15 of the 16 bits of the ADC  because the first bit is a sign bit (two's complement)
+
+#-------------------THERMISTOR SETUP------------------
+# NTC Thermister: 3kOhm, Tolerance 1%. Vishay Part Number: 01C3001FP
+#Temp Range: -40 - 150 oC
+#Steinhart & hart Coefficients
+A = 1.4028*pow(10,-3)
+B = 2.3734*pow(10,-4)
+C = 9.9257*pow(10,-8)
+
+def res_to_temp(R):
+	global A,B,C
+	T = (A + B*log(R) + C*(log(R))^3)^-1 #Steinhart Equation
+	if (T > 125) or (T < -40):
+		print('Warning: Thermistor Temperature Reading Out of Bounds!')
+	return T
+
+
+def vol_to_res(ADCvolt):
+
+
+	return res
+
+
+# Main loop.
+while True:
+    values = [0]*4
+    for i in range(2):
+    	values[i] = adc.read_adc(i, gain=GAIN)
+    print(str(values[0]*bit_to_volt)+' oC')
+
+    time.sleep(0.5)
